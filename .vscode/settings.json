@@ -65,5 +65,6 @@
 		"xutility": "cpp",
 		"print": "cpp"
 	},
+	"C_Cpp.default.cppStandard": "c++23",
 	"iis.configDir": ""
 }
