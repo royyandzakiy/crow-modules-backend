@@ -3,10 +3,9 @@ conan profile list
 conan profile detect
 
 conan install . --build=missing
-
-cmake -B build --preset conan-default
-cmake --build build --config Release
-cmake --build build --config Debug
+ && cmake -B build --preset default
+ && cmake --build build --config Release
+ && cmake --build build --config Debug
 ```
 
 create custom profile
