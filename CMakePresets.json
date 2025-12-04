@@ -20,7 +20,6 @@
 				"CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
 			},
 			"binaryDir": "${sourceDir}/build-clang",
-			"toolchainFile": "conan_toolchain.cmake",
 			"hidden": true
 		},
 		{
@@ -30,8 +29,7 @@
 			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release"
-			},
-			"toolchainFile": "conan_toolchain.cmake"
+			}
 		},
 		{
 			"name": "clang-debug",
@@ -40,30 +38,7 @@
 			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug"
-			},
-			"toolchainFile": "conan_toolchain.cmake"
-		},
-		{
-			"name": "msvc-vs2022",
-			"displayName": "msvc",
-			"description": "Configure using MSVC with Visual Studio 2022 generator",
-			"generator": "Visual Studio 17 2022",
-			"cacheVariables": {
-				"CMAKE_CXX_STANDARD": "23",
-				"CMAKE_CXX_STANDARD_REQUIRED": "ON",
-				"CMAKE_CXX_EXTENSIONS": "OFF",
-				"CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
-			},
-			"toolset": {
-				"value": "v143",
-				"strategy": "external"
-			},
-			"architecture": {
-				"value": "x64",
-				"strategy": "external"
-			},
-			"binaryDir": "${sourceDir}/build-msvc",
-			"toolchainFile": "build/generators/conan_toolchain.cmake"
+			}
 		}
 	],
 	"buildPresets": [
@@ -75,16 +50,6 @@
 		{
 			"name": "clang-release",
 			"configurePreset": "clang-release",
-			"configuration": "Release"
-		},
-		{
-			"name": "msvc-debug",
-			"configurePreset": "msvc-vs2022",
-			"configuration": "Debug"
-		},
-		{
-			"name": "msvc-release",
-			"configurePreset": "msvc-vs2022",
 			"configuration": "Release"
 		}
 	]
