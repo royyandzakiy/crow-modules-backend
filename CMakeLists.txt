@@ -9,15 +9,20 @@ project(cmake_project_template
 )
 
 # =============================================================================
-# Platform Configuration
-# =============================================================================
-
-# =============================================================================
 # Compiler Configuration
 # =============================================================================
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+if(MSVC)
+    add_compile_options(/W4 /permissive-)
+    # add_compile_options(/WX) # more strict
+else()
+    # Clang/GCC
+    add_compile_options(-Wall -Wextra)
+    # add_compile_options(-Werror -pedantic) # more strict
+endif()
 
 # =============================================================================
 # Dependencies
