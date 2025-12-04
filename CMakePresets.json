@@ -23,10 +23,8 @@
 			"toolchainFile": "build/generators/conan_toolchain.cmake"
 		},
 		{
-			"name": "gcc-ninja",
-			"displayName": "GCC + Ninja",
-			"description": "Configure using GCC compiler with Ninja generator",
-			"generator": "Ninja",
+			"name": "gcc-vs2022-base",
+			"generator": "Visual Studio 17 2022",
 			"cacheVariables": {
 				"CMAKE_C_COMPILER": "gcc",
 				"CMAKE_CXX_COMPILER": "g++",
@@ -36,7 +34,27 @@
 				"CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
 			},
 			"binaryDir": "${sourceDir}/build-gcc",
-			"toolchainFile": "build/generators/conan_toolchain.cmake"
+			"hidden": true
+		},
+		{
+			"name": "gcc-release",
+			"displayName": "GCC + VS2022 (Release)",
+			"description": "Configure using GCC compiler with VS2022 generator",
+			"inherits": "gcc-vs2022-base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release"
+			},
+			"toolchainFile": "build/Release/generators/conan_toolchain.cmake"
+		},
+		{
+			"name": "gcc-debug",
+			"displayName": "GCC + VS2022 (Debug)",
+			"description": "Configure using GCC compiler with VS2022 generator",
+			"inherits": "gcc-vs2022-base",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Debug"
+			},
+			"toolchainFile": "build/Debug/generators/conan_toolchain.cmake"
 		},
 		{
 			"name": "msvc-vs2022",
@@ -74,12 +92,12 @@
 		},
 		{
 			"name": "gcc-debug",
-			"configurePreset": "gcc-ninja",
+			"configurePreset": "gcc-debug",
 			"configuration": "Debug"
 		},
 		{
 			"name": "gcc-release",
-			"configurePreset": "gcc-ninja",
+			"configurePreset": "gcc-release",
 			"configuration": "Release"
 		},
 		{

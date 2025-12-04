@@ -30,8 +30,8 @@ specify via command
 
 ```bash
 conan install . -of build-msvc --build=missing -s compiler=msvc -s compiler.version=193 -s compiler.runtime=dynamic
+conan install . -of build-gcc --build=missing -s compiler=gcc -s compiler.version=12 -s compiler.libcxx=libstdc++11
 
 # These 2 successfully configure, but fail to build because of std::print
-conan install . -of build-gcc --build=missing -s compiler=gcc -s compiler.version=12 -s compiler.libcxx=libstdc++11
 conan install . -of build-clang --build=missing -s compiler=clang -s compiler.version=20 -s compiler.runtime_type=Release
 ```
