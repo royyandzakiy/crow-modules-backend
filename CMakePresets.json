@@ -7,7 +7,7 @@
 	},
 	"configurePresets": [
 		{
-			"name": "clang-ninja",
+			"name": "clang-ninja-base",
 			"displayName": "Clang + Ninja",
 			"description": "Configure using Clang compiler with Ninja generator",
 			"generator": "Ninja",
@@ -20,37 +20,24 @@
 				"CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
 			},
 			"binaryDir": "${sourceDir}/build-clang",
-			"toolchainFile": "build/generators/conan_toolchain.cmake"
-		},
-		{
-			"name": "gcc-vs2022-base",
-			"generator": "Visual Studio 17 2022",
-			"cacheVariables": {
-				"CMAKE_C_COMPILER": "gcc",
-				"CMAKE_CXX_COMPILER": "g++",
-				"CMAKE_CXX_STANDARD": "23",
-				"CMAKE_CXX_STANDARD_REQUIRED": "ON",
-				"CMAKE_CXX_EXTENSIONS": "OFF",
-				"CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
-			},
-			"binaryDir": "${sourceDir}/build-gcc",
+			"toolchainFile": "build/Release/generators/conan_toolchain.cmake",
 			"hidden": true
 		},
 		{
-			"name": "gcc-release",
-			"displayName": "GCC + VS2022 (Release)",
-			"description": "Configure using GCC compiler with VS2022 generator",
-			"inherits": "gcc-vs2022-base",
+			"name": "clang-release",
+			"displayName": "clang-release",
+			"description": "Configure using Clang compiler with Ninja generator",
+			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release"
 			},
 			"toolchainFile": "build/Release/generators/conan_toolchain.cmake"
 		},
 		{
-			"name": "gcc-debug",
-			"displayName": "GCC + VS2022 (Debug)",
-			"description": "Configure using GCC compiler with VS2022 generator",
-			"inherits": "gcc-vs2022-base",
+			"name": "clang-debug",
+			"displayName": "clang-debug",
+			"description": "Configure using Clang compiler with Ninja generator",
+			"inherits": "clang-ninja-base",
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug"
 			},
@@ -58,7 +45,7 @@
 		},
 		{
 			"name": "msvc-vs2022",
-			"displayName": "MSVC (Visual Studio 2022)",
+			"displayName": "msvc",
 			"description": "Configure using MSVC with Visual Studio 2022 generator",
 			"generator": "Visual Studio 17 2022",
 			"cacheVariables": {
@@ -82,22 +69,12 @@
 	"buildPresets": [
 		{
 			"name": "clang-debug",
-			"configurePreset": "clang-ninja",
+			"configurePreset": "clang-debug",
 			"configuration": "Debug"
 		},
 		{
 			"name": "clang-release",
-			"configurePreset": "clang-ninja",
-			"configuration": "Release"
-		},
-		{
-			"name": "gcc-debug",
-			"configurePreset": "gcc-debug",
-			"configuration": "Debug"
-		},
-		{
-			"name": "gcc-release",
-			"configurePreset": "gcc-release",
+			"configurePreset": "clang-release",
 			"configuration": "Release"
 		},
 		{
