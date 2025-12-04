@@ -1,3 +1,3 @@
-- make conan install calls for all compiler (bash/cmd line)
-	- fix issue, fail to run cpp23 code on gcc & clang
-- make cmakepresets for all compiler (config, build)
+- remove windows-setup.cmd, add conan detection
+- change this into full blown multi os template conan
+	- create an actual minim version

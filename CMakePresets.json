@@ -20,7 +20,7 @@
 				"CMAKE_POLICY_DEFAULT_CMP0091": "NEW"
 			},
 			"binaryDir": "${sourceDir}/build-clang",
-			"toolchainFile": "build/Release/generators/conan_toolchain.cmake",
+			"toolchainFile": "conan_toolchain.cmake",
 			"hidden": true
 		},
 		{
@@ -31,7 +31,7 @@
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Release"
 			},
-			"toolchainFile": "build/Release/generators/conan_toolchain.cmake"
+			"toolchainFile": "conan_toolchain.cmake"
 		},
 		{
 			"name": "clang-debug",
@@ -41,7 +41,7 @@
 			"cacheVariables": {
 				"CMAKE_BUILD_TYPE": "Debug"
 			},
-			"toolchainFile": "build/Debug/generators/conan_toolchain.cmake"
+			"toolchainFile": "conan_toolchain.cmake"
 		},
 		{
 			"name": "msvc-vs2022",
