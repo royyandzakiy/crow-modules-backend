@@ -17,7 +17,7 @@ include(cmake/conan-preconfigure.cmake)
 # =============================================================================
 # Project Configuration
 # =============================================================================
-project(cmake_project_template 
+project(crow-modules-backend 
     LANGUAGES CXX
     VERSION 1.0.0
 )
@@ -34,7 +34,9 @@ endif()
 # =============================================================================
 # Dependencies
 # =============================================================================
-find_package(fmt REQUIRED)
+find_package(Crow REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(ZLIB REQUIRED)
 
 # =============================================================================
 # Main Executable
@@ -43,4 +45,5 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt)
+target_link_libraries(${PROJECT_NAME} PRIVATE Crow::Crow)
+# target_link_libraries(${PROJECT_NAME} PRIVATE asio::asio)

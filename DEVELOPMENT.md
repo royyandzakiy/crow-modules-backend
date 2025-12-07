@@ -1,3 +1,1 @@
-- remove windows-setup.cmd, add conan detection
-- change this into full blown multi os template conan
-	- create an actual minim version
+- make into crud app
