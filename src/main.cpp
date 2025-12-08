@@ -36,16 +36,16 @@ int main() {
 
 	crow::SimpleApp app; // define your crow application
 
-	CROW_ROUTE(app, "/")([]() {								 //
-		auto page = crow::mustache::load_text("index.html"); //
-		return page;										 //
-	});
+	// CROW_ROUTE(app, "/")([]() {								 //
+	// 	auto page = crow::mustache::load_text("index.html"); //
+	// 	return page;										 //
+	// });
 
-	CROW_ROUTE(app, "/<string>")([](std::string name) {	 //
-		auto page = crow::mustache::load("index.html");	 //
-		crow::mustache::context ctx({{"person", name}}); //
-		return page.render(ctx);						 //
-	});
+	// CROW_ROUTE(app, "/<string>")([](std::string name) {	 //
+	// 	auto page = crow::mustache::load("index.html");	 //
+	// 	crow::mustache::context ctx({{"person", name}}); //
+	// 	return page.render(ctx);						 //
+	// });
 
 	// USERS
 	CROW_ROUTE(app, "/users").methods("POST"_method)([](const crow::request &req) {
@@ -220,6 +220,15 @@ int main() {
 		}
 		return crow::response(postsArray);
 	});
+
+	users.reserve(100);
+	users.reserve(1000);
+
+	std::vector<User> users = {{1, "Alice Smith"}, {2, "Bob Johnson"}, {3, "Charlie Brown"}};
+
+	std::vector<Post> posts = {{101, "Modern C++", "C++20/23 Features", 1},
+							   {102, "Concurrency", "Threads and async", 2},
+							   {103, "Modules", "C++20 Modules", 1}};
 
 	// set the port, set the app to run on multiple threads, and run the app
 	app.port(18080).multithreaded().run();
