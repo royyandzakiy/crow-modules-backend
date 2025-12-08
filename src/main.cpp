@@ -47,6 +47,22 @@ int main() {
 		return page.render(ctx);						 //
 	});
 
+	// USERS
+	CROW_ROUTE(app, "/users").methods("POST"_method)([](const crow::request &req) {
+		auto json = crow::json::load(req.body);
+		if (!json || !json.has("name")) {
+			return crow::response(400, "Missing 'name' field");
+		}
+
+		int id = ++g_post_id_count;
+		users[id] = User(id, json["name"].s());
+
+		crow::json::wvalue response;
+		response["id"] = id;
+		response["name"] = json["name"].s();
+		return crow::response(response);
+	});
+
 	// set the port, set the app to run on multiple threads, and run the app
 	app.port(18080).multithreaded().run();
 }
