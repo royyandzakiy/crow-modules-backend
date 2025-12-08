@@ -36,6 +36,7 @@ endif()
 # Dependencies
 # =============================================================================
 find_package(Crow REQUIRED)
+find_package(SQLiteCpp REQUIRED)
 
 # =============================================================================
 # Main Executable
@@ -47,5 +48,6 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME} 
 	PRIVATE 
 		Crow::Crow
+		SQLiteCpp
 )
 # target_link_libraries(${PROJECT_NAME} PRIVATE asio::asio)

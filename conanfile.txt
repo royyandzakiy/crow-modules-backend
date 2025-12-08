@@ -1,5 +1,6 @@
 [requires]
 crowcpp-crow/1.3.0
+sqlitecpp/3.3.3
 [generators]
 CMakeDeps
 CMakeToolchain
