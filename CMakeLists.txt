@@ -48,6 +48,7 @@ add_executable(${PROJECT_NAME}
     src/models/post.cpp
     src/api/routes/user_routes.cpp
     src/api/routes/post_routes.cpp
+    src/core/database.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 
