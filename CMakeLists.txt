@@ -43,6 +43,8 @@ find_package(SQLiteCpp REQUIRED)
 # =============================================================================
 add_executable(${PROJECT_NAME} 
     src/main.cpp
+    src/models/user.cpp
+    src/models/post.cpp
 )
 
 target_link_libraries(${PROJECT_NAME} 

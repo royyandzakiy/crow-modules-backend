@@ -1,30 +1,10 @@
 #include <crow.h>
 
-import <unordered_map>;
 import std;
+import <unordered_map>;
 
-class User {
-  public:
-	int id_;
-	std::string name_;
-
-	User() = default;
-	User(const int id, const std::string &name) : id_(id), name_(name) {
-	}
-};
-
-class Post {
-  public:
-	int id_;
-	std::string title_;
-	std::string content_;
-	int author_id_;
-
-	Post() = default;
-	Post(const int id, const std::string &title, const std::string &content, const int author_id)
-		: id_(id), title_(title), content_(content), author_id_(author_id) {
-	}
-};
+import user;
+import post;
 
 std::unordered_map<int, User> g_users;
 std::unordered_map<int, Post> g_posts;
