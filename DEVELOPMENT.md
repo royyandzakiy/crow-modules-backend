@@ -1,6 +1,10 @@
 # V1
 - [x] make crud of user & post
 - use sqlitecpp
+	- [x] add sqlitecpp lib
+	- wrap user & post data manipulation with repositories. consider making interface & concepts, use dep inj
+	- implement db.cpp, connect and test
+	- migrate user & post map into fully db based
 
 # V2
 - add auth
@@ -9,6 +13,8 @@
 
 # V3
 - refactor user & post into models
+
+---
 
 app
 - init
@@ -30,4 +36,3 @@ docs: api
 
 # V4
 - add persistence (redis, cache)
-- add storage
