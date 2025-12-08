@@ -3,13 +3,11 @@
 import std;
 import <unordered_map>;
 
+import globals;
 import user;
 import post;
-
-std::unordered_map<int, User> g_users;
-std::unordered_map<int, Post> g_posts;
-int g_user_id_count = 0;
-int g_post_id_count = 0;
+import user_routes;
+import post_routes;
 
 int main() {
 	g_users.reserve(100);
