@@ -26,28 +26,28 @@ class Post {
 	}
 };
 
-std::unordered_map<int, User> users;
-std::unordered_map<int, Post> posts;
+std::unordered_map<int, User> g_users;
+std::unordered_map<int, Post> g_posts;
 int g_user_id_count = 0;
 int g_post_id_count = 0;
 
 int main() {
-	users.reserve(100);
-	users.reserve(1000);
+	g_users.reserve(100);
+	g_users.reserve(1000);
 
 	std::println("Crow Start!");
 
 	crow::SimpleApp app; // define your crow application
 
 	// PRE-LOAD INITIAL DATA EFFICIENTLY
-	users.try_emplace(1, 1, "Alice Smith");
-	users.try_emplace(2, 2, "Bob Johnson");
-	users.try_emplace(3, 3, "Charlie Brown");
+	g_users.try_emplace(1, 1, "Alice Smith");
+	g_users.try_emplace(2, 2, "Bob Johnson");
+	g_users.try_emplace(3, 3, "Charlie Brown");
 	g_user_id_count = 3;
 
-	posts.try_emplace(101, 101, "Modern C++", "C++20/23 Features", 1);
-	posts.try_emplace(102, 102, "Concurrency", "Threads and async", 2);
-	posts.try_emplace(103, 103, "Modules", "C++20 Modules", 1);
+	g_posts.try_emplace(101, 101, "Modern C++", "C++20/23 Features", 1);
+	g_posts.try_emplace(102, 102, "Concurrency", "Threads and async", 2);
+	g_posts.try_emplace(103, 103, "Modules", "C++20 Modules", 1);
 	g_post_id_count = 103;
 
 	CROW_ROUTE(app, "/")([]() {								 //
@@ -63,7 +63,7 @@ int main() {
 		}
 
 		int id = ++g_post_id_count;
-		users[id] = User(id, json["name"].s());
+		g_users[id] = User(id, json["name"].s());
 
 		crow::json::wvalue response;
 		response["id"] = id;
@@ -74,7 +74,7 @@ int main() {
 	CROW_ROUTE(app, "/users").methods("GET"_method)([]() {
 		crow::json::wvalue usersArray;
 		int i = 0;
-		for (const auto &[id, name] : users) {
+		for (const auto &[id, name] : g_users) {
 			crow::json::wvalue userJson;
 			userJson["id"] = id;
 			userJson["name"] = &name;
@@ -84,8 +84,8 @@ int main() {
 	});
 
 	CROW_ROUTE(app, "/users/<int>").methods("GET"_method)([](int userId) {
-		auto it = users.find(userId);
-		if (it == users.end()) {
+		auto it = g_users.find(userId);
+		if (it == g_users.end()) {
 			return crow::response(404, "User not found");
 		}
 
@@ -96,8 +96,8 @@ int main() {
 	});
 
 	CROW_ROUTE(app, "/users/<int>").methods("PUT"_method)([](const crow::request &req, int userId) {
-		auto it = users.find(userId);
-		if (it == users.end()) {
+		auto it = g_users.find(userId);
+		if (it == g_users.end()) {
 			return crow::response(404, "User not found");
 		}
 
@@ -123,12 +123,12 @@ int main() {
 
 		// Check if author exists
 		int authorId = json["author_id"].i();
-		if (users.find(authorId) == users.end()) {
+		if (g_users.find(authorId) == g_users.end()) {
 			return crow::response(400, "Author not found");
 		}
 
 		int id = ++g_post_id_count;
-		posts[id] = Post(id, json["title"].s(), json["content"].s(), authorId);
+		g_posts[id] = Post(id, json["title"].s(), json["content"].s(), authorId);
 
 		crow::json::wvalue response;
 		response["id_"] = id;
@@ -141,7 +141,7 @@ int main() {
 	CROW_ROUTE(app, "/posts").methods("GET"_method)([]() {
 		crow::json::wvalue postsArray;
 		int i = 0;
-		for (const auto &[id, post] : posts) {
+		for (const auto &[id, post] : g_posts) {
 			crow::json::wvalue postJson;
 			postJson["id_"] = post.id_;
 			postJson["title_"] = post.title_;
@@ -153,8 +153,8 @@ int main() {
 	});
 
 	CROW_ROUTE(app, "/posts/<int>").methods("GET"_method)([](int postId) {
-		auto it = posts.find(postId);
-		if (it == posts.end()) {
+		auto it = g_posts.find(postId);
+		if (it == g_posts.end()) {
 			return crow::response(404, "Post not found");
 		}
 
@@ -167,8 +167,8 @@ int main() {
 	});
 
 	CROW_ROUTE(app, "/posts/<int>").methods("PUT"_method)([](const crow::request &req, int postId) {
-		auto it = posts.find(postId);
-		if (it == posts.end()) {
+		auto it = g_posts.find(postId);
+		if (it == g_posts.end()) {
 			return crow::response(404, "Post not found");
 		}
 
@@ -185,7 +185,7 @@ int main() {
 		}
 		if (json.has("author_id")) {
 			int authorId = json["author_id"].i();
-			if (users.find(authorId) == users.end()) {
+			if (g_users.find(authorId) == g_users.end()) {
 				return crow::response(400, "Author not found");
 			}
 			it->second.author_id_ = authorId;
@@ -200,23 +200,23 @@ int main() {
 	});
 
 	CROW_ROUTE(app, "/posts/<int>").methods("DELETE"_method)([](int postId) {
-		auto it = posts.find(postId);
-		if (it == posts.end()) {
+		auto it = g_posts.find(postId);
+		if (it == g_posts.end()) {
 			return crow::response(404, "Post not found");
 		}
 
-		posts.erase(it);
+		g_posts.erase(it);
 		return crow::response(204);
 	});
 
 	CROW_ROUTE(app, "/users/<int>/posts").methods("GET"_method)([](int userId) {
-		if (users.find(userId) == users.end()) {
+		if (g_users.find(userId) == g_users.end()) {
 			return crow::response(404, "User not found");
 		}
 
 		crow::json::wvalue postsArray;
 		int i = 0;
-		for (const auto &[id, post] : posts) {
+		for (const auto &[id, post] : g_posts) {
 			if (post.author_id_ == userId) {
 				crow::json::wvalue postJson;
 				postJson["id_"] = post.id_;

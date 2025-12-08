@@ -1,5 +1,5 @@
 # V1
-- make crud of user & post
+- [x] make crud of user & post
 - use sqlitecpp
 
 # V2
