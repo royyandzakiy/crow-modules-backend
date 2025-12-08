@@ -32,9 +32,23 @@ int g_user_id_count = 0;
 int g_post_id_count = 0;
 
 int main() {
+	users.reserve(100);
+	users.reserve(1000);
+
 	std::println("Crow Start!");
 
 	crow::SimpleApp app; // define your crow application
+
+	// PRE-LOAD INITIAL DATA EFFICIENTLY
+	users.try_emplace(1, 1, "Alice Smith");
+	users.try_emplace(2, 2, "Bob Johnson");
+	users.try_emplace(3, 3, "Charlie Brown");
+	g_user_id_count = 3;
+
+	posts.try_emplace(101, 101, "Modern C++", "C++20/23 Features", 1);
+	posts.try_emplace(102, 102, "Concurrency", "Threads and async", 2);
+	posts.try_emplace(103, 103, "Modules", "C++20 Modules", 1);
+	g_post_id_count = 103;
 
 	// CROW_ROUTE(app, "/")([]() {								 //
 	// 	auto page = crow::mustache::load_text("index.html"); //
@@ -220,15 +234,6 @@ int main() {
 		}
 		return crow::response(postsArray);
 	});
-
-	users.reserve(100);
-	users.reserve(1000);
-
-	std::vector<User> users = {{1, "Alice Smith"}, {2, "Bob Johnson"}, {3, "Charlie Brown"}};
-
-	std::vector<Post> posts = {{101, "Modern C++", "C++20/23 Features", 1},
-							   {102, "Concurrency", "Threads and async", 2},
-							   {103, "Modules", "C++20 Modules", 1}};
 
 	// set the port, set the app to run on multiple threads, and run the app
 	app.port(18080).multithreaded().run();
