@@ -36,8 +36,6 @@ endif()
 # Dependencies
 # =============================================================================
 find_package(Crow REQUIRED)
-find_package(OpenSSL REQUIRED)
-find_package(ZLIB REQUIRED)
 
 # =============================================================================
 # Main Executable
@@ -46,5 +44,8 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
-target_link_libraries(${PROJECT_NAME} PRIVATE Crow::Crow)
+target_link_libraries(${PROJECT_NAME} 
+	PRIVATE 
+		Crow::Crow
+)
 # target_link_libraries(${PROJECT_NAME} PRIVATE asio::asio)

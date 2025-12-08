@@ -7,6 +7,11 @@ int main()
 	std::println("Crow Start!");
     crow::SimpleApp app; //define your crow application
 
+    CROW_ROUTE(app, "/")([](){ // 
+        auto page = crow::mustache::load_text("index.html"); // 
+        return page; //
+    });
+
     CROW_ROUTE(app, "/<string>")([](std::string name){ // 
         auto page = crow::mustache::load("index.html"); // 
         crow::mustache::context ctx ({{"person", name}}); // 
