@@ -63,6 +63,49 @@ int main() {
 		return crow::response(response);
 	});
 
+	CROW_ROUTE(app, "/users").methods("GET"_method)([]() {
+		crow::json::wvalue usersArray;
+		int i = 0;
+		for (const auto &[id, name] : users) {
+			crow::json::wvalue userJson;
+			userJson["id"] = id;
+			userJson["name"] = &name;
+			usersArray[++i] = std::move(userJson);
+		}
+		return crow::response(usersArray);
+	});
+
+	CROW_ROUTE(app, "/users/<int>").methods("GET"_method)([](int userId) {
+		auto it = users.find(userId);
+		if (it == users.end()) {
+			return crow::response(404, "User not found");
+		}
+
+		crow::json::wvalue response;
+		response["id"] = it->second.id_;
+		response["name"] = it->second.name_;
+		return crow::response(response);
+	});
+
+	CROW_ROUTE(app, "/users/<int>").methods("PUT"_method)([](const crow::request &req, int userId) {
+		auto it = users.find(userId);
+		if (it == users.end()) {
+			return crow::response(404, "User not found");
+		}
+
+		auto json = crow::json::load(req.body);
+		if (!json || !json.has("name")) {
+			return crow::response(400, "Missing 'name' field");
+		}
+
+		it->second.name_ = json["name"].s();
+
+		crow::json::wvalue response;
+		response["id"] = it->second.id_;
+		response["name"] = it->second.name_;
+		return crow::response(response);
+	});
+
 	// set the port, set the app to run on multiple threads, and run the app
 	app.port(18080).multithreaded().run();
 }
