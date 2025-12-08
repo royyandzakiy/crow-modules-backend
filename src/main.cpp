@@ -50,16 +50,10 @@ int main() {
 	posts.try_emplace(103, 103, "Modules", "C++20 Modules", 1);
 	g_post_id_count = 103;
 
-	// CROW_ROUTE(app, "/")([]() {								 //
-	// 	auto page = crow::mustache::load_text("index.html"); //
-	// 	return page;										 //
-	// });
-
-	// CROW_ROUTE(app, "/<string>")([](std::string name) {	 //
-	// 	auto page = crow::mustache::load("index.html");	 //
-	// 	crow::mustache::context ctx({{"person", name}}); //
-	// 	return page.render(ctx);						 //
-	// });
+	CROW_ROUTE(app, "/")([]() {								 //
+		auto page = crow::mustache::load_text("index.html"); //
+		return page;										 //
+	});
 
 	// USERS
 	CROW_ROUTE(app, "/users").methods("POST"_method)([](const crow::request &req) {
