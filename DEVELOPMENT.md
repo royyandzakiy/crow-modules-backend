@@ -1,3 +1,9 @@
+# V0
+- all in one file
+- crud routes
+- user & post model
+- global map as db
+
 # V1
 - [x] make crud of user & post
 - use sqlitecpp
@@ -5,8 +11,10 @@
 	- wrap user & post data manipulation with repositories. consider making interface & concepts, use dep inj
 	- implement db.cpp, connect and test
 	- migrate user & post map into fully db based
+- prep crud testing tools
 
 # V2
+- use templates, no interfaces
 - add auth
 - add logging
 - use postgres
