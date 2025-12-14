@@ -9,50 +9,69 @@ import user;
 import database;
 export module user_repository;
 
-// rewrite pls
-// export class UserRepository {
-//   private:
-// 	DatabaseConnection &db_;
+export class UserRepository {
+  private:
+	DatabaseConnection &db_;
 
-//   public:
-// 	explicit UserRepository(DatabaseConnection &db) : db_(db) {
-// 	}
+  public:
+	explicit UserRepository(DatabaseConnection &db) : db_(db) {
+	}
 
-// 	// CRUD operations
-// 	std::optional<User> findById(int id);
-// 	std::vector<User> findAll();
-// 	int create(const User &user);
-// 	bool update(const User &user);
-// 	bool deleteById(int id);
-// 	int count();
+	std::optional<User> findById(int id);
+	std::vector<User> findAll();
+	std::expected<int, std::string> create(const User &user);
+	bool update(const User &user);
+	bool deleteById(int id);
+	int count();
 
-//   private:
-// 	User userFromRow(const SQLite::Statement &stmt);
-// };
+  private:
+	User userFromRow(const SQLite::Statement &stmt);
+};
 
-// std::optional<User> UserRepository::findById(int id) {
-// 	return db_.execute([id](SQLite::Database &db) -> std::optional<User> {
-// 		SQLite::Statement query(db, "SELECT id, name FROM users WHERE id = ?");
-// 		query.bind(1, id);
+std::optional<User> UserRepository::findById(int id) {
+	return db_.execute([id](SQLite::Database &db) -> std::optional<User> {
+		SQLite::Statement query(db, "SELECT id, name FROM users WHERE id = ?");
+		query.bind(1, id);
 
-// 		if (query.executeStep()) {
-// 			return User{query.getColumn(0).getInt(), query.getColumn(1).getString()};
-// 		}
-// 		return std::nullopt;
-// 	});
-// }
+		if (query.executeStep()) {
+			return User{query.getColumn(0).getInt(), query.getColumn(1).getString()};
+		}
 
-// std::vector<User> UserRepository::findAll() {
-// 	return db_.execute([](SQLite::Database &db) -> std::vector<User> {
-// 		std::vector<User> users;
-// 		SQLite::Statement query(db, "SELECT id, name FROM users ORDER BY id");
+		return std::nullopt;
+	});
+}
 
-// 		while (query.executeStep()) {
-// 			users.emplace_back(query.getColumn(0).getInt(), query.getColumn(1).getString());
-// 		}
-// 		return users;
-// 	});
-// }
+std::vector<User> UserRepository::findAll() {
+	return db_.execute([](SQLite::Database &db) -> std::vector<User> {
+		std::vector<User> users;
+		SQLite::Statement query(db, "SELECT id, name FROM users ORDER by id");
+
+		while (query.executeStep()) {
+			users.emplace_back(query.getColumn(0).getInt(), query.getColumn(1).getString());
+		}
+
+		return users;
+	});
+}
+
+std::expected<int, std::string> UserRepository::create(const User &user) {
+	return db_.execute([&user](SQLite::Database &db) -> std::expected<int, std::string> {
+		SQLite::Statement query(db, "INSERT INTO users (name) VALUES (?) RETURNING id");
+		query.bind(1, user.name_);
+
+		if (query.executeStep()) {
+			return query.getColumn(0).getInt();
+		}
+
+		return std::unexpected("Failed to create user");
+	});
+}
+
+// ROY (14 dec 25): continue rewrite below as exercise
+
+// bool update(const User &user);
+// bool deleteById(int id);
+// int count();
 
 // int UserRepository::create(const User &user) {
 // 	return db_.execute([&user](SQLite::Database &db) -> int {

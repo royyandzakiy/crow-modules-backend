@@ -9,7 +9,7 @@ import post;
 import user_routes;
 import post_routes;
 
-int main() {
+auto main() -> int {
 	g_users.reserve(100);
 	g_users.reserve(1000);
 

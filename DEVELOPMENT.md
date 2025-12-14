@@ -1,14 +1,15 @@
-# V0
+# V0 [done]
 - all in one file
 - crud routes
 - user & post model
 - global map as db
+- store as release/v0.1
 
 # V1
 - [x] make crud of user & post
 - use sqlitecpp
 	- [x] add sqlitecpp lib
-	- wrap user & post data manipulation with repositories. consider making interface & concepts, use dep inj
+	- [here] wrap user & post data manipulation with repositories. consider making interface & concepts, use dep inj. rewrite for excersize
 	- implement db.cpp, connect and test
 	- migrate user & post map into fully db based
 - prep crud testing tools
